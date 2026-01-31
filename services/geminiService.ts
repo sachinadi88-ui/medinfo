@@ -14,8 +14,7 @@ Strict Constraints:
 `;
 
 export const fetchMedicineDetails = async (medicineName: string): Promise<MedicineInfo> => {
-  // Use the API key directly from process.env as per guidelines.
-  // The shim in index.html ensures this doesn't throw a ReferenceError.
+  // Always initialize GoogleGenAI with the API key from process.env
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   
   const response = await ai.models.generateContent({
