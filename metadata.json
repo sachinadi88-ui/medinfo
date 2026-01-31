@@ -1,0 +1,5 @@
+{
+  "name": "MedInfo Assistant",
+  "description": "A clean and reliable tool to get educational information about medicines using the Gemini API. It provides structured data on composition, uses, side effects, and warnings with a focus on safety and neutrality.",
+  "requestFramePermissions": []
+}
