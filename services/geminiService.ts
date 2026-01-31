@@ -14,15 +14,9 @@ Strict Constraints:
 `;
 
 export const fetchMedicineDetails = async (medicineName: string): Promise<MedicineInfo> => {
-  /**
-   * Always use the process.env.API_KEY obtained exclusively from the environment.
-   */
-  const apiKey = process.env.API_KEY;
-  if (!apiKey) {
-    console.warn("API_KEY is not defined in process.env. Ensure it is configured in the environment.");
-  }
-
-  const ai = new GoogleGenAI({ apiKey: apiKey || '' });
+  // Use the API key directly from process.env as per guidelines.
+  // The shim in index.html ensures this doesn't throw a ReferenceError.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
@@ -58,12 +52,12 @@ export const fetchMedicineDetails = async (medicineName: string): Promise<Medici
   });
 
   const text = response.text;
-  if (!text) throw new Error("No response received from the assistant. The model may have blocked the query or failed to generate content.");
+  if (!text) throw new Error("No response received from the assistant.");
   
   try {
     return JSON.parse(text) as MedicineInfo;
   } catch (e) {
-    console.error("JSON Parsing Error:", e, "Raw Text:", text);
-    throw new Error("Failed to parse medicine information. The response was not in the expected format.");
+    console.error("JSON Parsing Error:", e);
+    throw new Error("Failed to format medicine information correctly.");
   }
 };

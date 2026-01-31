@@ -3,11 +3,14 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 
-const container = document.getElementById('root');
+const init = () => {
+  const container = document.getElementById('root');
 
-if (!container) {
-  console.error("MedInfo Assistant: Could not find the #root element in index.html.");
-} else {
+  if (!container) {
+    console.error("MedInfo Assistant: Could not find the #root element.");
+    return;
+  }
+
   try {
     const root = createRoot(container);
     root.render(
@@ -16,6 +19,13 @@ if (!container) {
       </React.StrictMode>
     );
   } catch (error) {
-    console.error("MedInfo Assistant: Error during React initialization:", error);
+    console.error("MedInfo Assistant: React mount failed:", error);
   }
+};
+
+// Ensure DOM is ready before mounting
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
 }

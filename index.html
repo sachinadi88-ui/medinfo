@@ -9,10 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
       /**
-       * CRITICAL: Define a shim for process immediately.
-       * This prevents ReferenceErrors if any module tries to access process.env before it is polyfilled.
+       * CRITICAL: React 19 and many ESM modules expect process.env to exist.
+       * We define it globally here to prevent 'ReferenceError: process is not defined'.
        */
-      window.process = window.process || { env: { API_KEY: '' } };
+      window.process = {
+        env: {
+          NODE_ENV: 'production',
+          API_KEY: '' // Will be populated by the environment if available
+        }
+      };
       
       tailwind.config = {
         theme: {
@@ -34,7 +39,6 @@
       }
     </script>
     <style>
-      /* Ensure the background is never black by default */
       html, body {
         background-color: #f2e8cf !important;
         color: #1a2e1d;
@@ -44,8 +48,6 @@
       }
       #root {
         min-height: 100vh;
-        display: flex;
-        flex-direction: column;
       }
     </style>
     <script type="importmap">
@@ -63,5 +65,7 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Explicitly load the entry point as an ES module -->
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>
