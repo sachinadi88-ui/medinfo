@@ -14,9 +14,15 @@ Strict Constraints:
 `;
 
 export const fetchMedicineDetails = async (medicineName: string): Promise<MedicineInfo> => {
-  // Safe access to API Key
-  const apiKey = (window as any).process?.env?.API_KEY || '';
-  const ai = new GoogleGenAI({ apiKey });
+  /**
+   * Always use the process.env.API_KEY obtained exclusively from the environment.
+   */
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    console.warn("API_KEY is not defined in process.env. Ensure it is configured in the environment.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey: apiKey || '' });
   
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
@@ -52,11 +58,12 @@ export const fetchMedicineDetails = async (medicineName: string): Promise<Medici
   });
 
   const text = response.text;
-  if (!text) throw new Error("No response received from the assistant.");
+  if (!text) throw new Error("No response received from the assistant. The model may have blocked the query or failed to generate content.");
   
   try {
     return JSON.parse(text) as MedicineInfo;
   } catch (e) {
-    throw new Error("Failed to parse medicine information. Please try again.");
+    console.error("JSON Parsing Error:", e, "Raw Text:", text);
+    throw new Error("Failed to parse medicine information. The response was not in the expected format.");
   }
 };

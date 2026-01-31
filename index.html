@@ -8,8 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
-      // Define a shim for process to prevent ReferenceErrors in the browser
-      window.process = { env: {} };
+      /**
+       * CRITICAL: Define a shim for process immediately.
+       * This prevents ReferenceErrors if any module tries to access process.env before it is polyfilled.
+       */
+      window.process = window.process || { env: { API_KEY: '' } };
       
       tailwind.config = {
         theme: {
@@ -31,31 +34,34 @@
       }
     </script>
     <style>
-      body {
-        background-color: #f2e8cf; /* brand-cream */
+      /* Ensure the background is never black by default */
+      html, body {
+        background-color: #f2e8cf !important;
         color: #1a2e1d;
         min-height: 100vh;
         margin: 0;
+        padding: 0;
       }
-      .glass {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
     </style>
     <script type="importmap">
-    {
-      "imports": {
-        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-        "react/": "https://esm.sh/react@^19.2.4/",
-        "react": "https://esm.sh/react@^19.2.4",
-        "@google/genai": "https://esm.sh/@google/genai@^1.39.0"
-      }
-    }
-    </script>
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "@google/genai": "https://esm.sh/@google/genai@1.3.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
   </head>
   <body>
     <div id="root"></div>
-    <!-- The environment automatically imports index.tsx as a module -->
   </body>
 </html>
