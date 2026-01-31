@@ -48,11 +48,31 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* Loading Skeleton */}
+        {/* Loading State with Message */}
         {state.loading && (
-          <div className="max-w-4xl mx-auto px-4 mt-8 animate-pulse">
-            <div className="h-24 bg-brand-mid/10 rounded-3xl mb-4"></div>
-            <div className="h-64 bg-brand-mid/10 rounded-3xl"></div>
+          <div className="max-w-4xl mx-auto px-4 mt-12 text-center animate-pulse">
+            <div className="flex flex-col items-center gap-6">
+              <div className="relative">
+                <div className="w-20 h-20 border-4 border-brand-mid/20 border-t-brand-deep rounded-full animate-spin"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8 text-brand-mid">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                  </svg>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-semibold text-brand-deep tracking-tight">
+                  wait patiently while we are fetching the info....
+                </h3>
+                <p className="text-brand-mid font-medium max-w-xs mx-auto">
+                  AI Pharma-Aid is analyzing medical data to provide a clear summary for you.
+                </p>
+              </div>
+              <div className="w-full max-w-md space-y-4">
+                <div className="h-4 bg-brand-mid/10 rounded-full w-3/4 mx-auto"></div>
+                <div className="h-4 bg-brand-mid/10 rounded-full w-1/2 mx-auto"></div>
+              </div>
+            </div>
           </div>
         )}
 
