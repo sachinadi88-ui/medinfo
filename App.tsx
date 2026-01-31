@@ -1,10 +1,10 @@
 
 import React, { useState, useCallback } from 'react';
-import Header from './components/Header';
-import SearchBar from './components/SearchBar';
-import MedicineDetails from './components/MedicineDetails';
-import { AppState } from './types';
-import { fetchMedicineDetails } from './services/geminiService';
+import Header from './components/Header.tsx';
+import SearchBar from './components/SearchBar.tsx';
+import MedicineDetails from './components/MedicineDetails.tsx';
+import { AppState } from './types.ts';
+import { fetchMedicineDetails } from './services/geminiService.ts';
 
 const App: React.FC = () => {
   const [state, setState] = useState<AppState>({

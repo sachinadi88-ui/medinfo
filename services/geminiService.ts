@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { MedicineInfo } from "../types";
+import { MedicineInfo } from "../types.ts";
 
 const SYSTEM_INSTRUCTION = `
 You are a medical information assistant. 
@@ -14,7 +14,9 @@ Strict Constraints:
 `;
 
 export const fetchMedicineDetails = async (medicineName: string): Promise<MedicineInfo> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Safe access to API Key
+  const apiKey = (window as any).process?.env?.API_KEY || '';
+  const ai = new GoogleGenAI({ apiKey });
   
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',

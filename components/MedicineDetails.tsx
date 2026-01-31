@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MedicineInfo } from '../types';
+import { MedicineInfo } from '../types.ts';
 
 interface MedicineDetailsProps {
   data: MedicineInfo;
